@@ -22,7 +22,7 @@ const Navbar: React.FC<NavbarProps> = ({ cartQuantity, setCartQuantity }) => {
   const linkClasses = ({ isActive }: { isActive: boolean }) =>
     `relative pb-2 transition text-gray-700 hover:text-blue-600 block ${
       isActive
-        ? 'text-black after:content-[""] md:after:absolute after:left-0 after:right-0 after:-bottom-4 after:h-1 after:bg-orange-500 after:rounded-full'
+        ? 'text-black after:content-[""] after:absolute after:left-0 after:right-0 after:-bottom-4 after:h-1 after:bg-orange-500 after:rounded-full'
         : ''
     }`;
 
