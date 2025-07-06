@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+
 import Navbar from './assets/components/Navbar';
 import ImageGallery from './assets/components/ImageGallery';
-
+import { useState } from 'react';
 import image1 from './assets/images/image-product-1.jpg';
 import image2 from './assets/images/image-product-2.jpg';
 import image3 from './assets/images/image-product-3.jpg';
