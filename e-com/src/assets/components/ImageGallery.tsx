@@ -88,7 +88,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
       {/* Close Button */}
       <button
         onClick={closeModal}
-        className="absolute top-16 right-48 text-gray-700 text-3xl font-bold hover:text-orange-500 hover:cursor-pointer "
+        className="absolute top-16 right-35 text-gray-700 text-3xl font-bold hover:text-orange-500 hover:cursor-pointer "
         aria-label="Close modal"
       >
         &times;
