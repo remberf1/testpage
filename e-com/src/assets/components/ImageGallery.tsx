@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import  nextIcon from '../images/icon-next.svg';
+import nextIcon from '../images/icon-next.svg';
 import prevIcon from '../images/icon-previous.svg';
 
 interface ImageGalleryProps {
@@ -13,28 +13,57 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const prevImage = () => setSelectedIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  const nextImage = () => setSelectedIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  const prevImage = () =>
+    setSelectedIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  const nextImage = () =>
+    setSelectedIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="md:max-w-2xl mx-auto">
       {/* Main Image */}
-      <div className="mb-4 cursor-pointer" onClick={openModal}>
+      <div className="mb-4 cursor-pointer relative">
         <img
-            src={images[selectedIndex]}
-            alt={`Product ${selectedIndex + 1}`}
-            className="w-76 h-88 object-cover rounded-lg ml-18"
+          src={images[selectedIndex]}
+          alt={`Product ${selectedIndex + 1}`}
+          onClick={openModal}
+          // Use w-screen on mobile and w-full on md+ to fill full viewport width
+          className="w-screen md:w-full h-auto object-cover md:rounded-lg  md:mx-0"
+          // -mx-4 removes padding from parent px-4 on mobile
         />
-        </div>
 
-      {/* Thumbnail Images */}
-      <div className="flex justify-center gap-4">
+        {/* Mobile Prev/Next buttons */}
+        <div className="absolute inset-0 flex items-center justify-between px-4 md:hidden">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              prevImage();
+            }}
+            className="bg-white bg-opacity-70 hover:bg-opacity-90 rounded-full w-10 h-10 flex items-center justify-center"
+            aria-label="Previous image"
+          >
+            <img src={prevIcon} alt="Previous" className="w-3 h-3" />
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              nextImage();
+            }}
+            className="bg-white bg-opacity-70 hover:bg-opacity-90 rounded-full w-10 h-10 flex items-center justify-center"
+            aria-label="Next image"
+          >
+            <img src={nextIcon} alt="Next" className="w-3 h-3" />
+          </button>
+        </div>
+      </div>
+
+      {/* Thumbnails - Hidden on mobile */}
+      <div className="hidden md:flex justify-center gap-4 flex-wrap mt-4">
         {images.map((img, index) => (
           <button
             key={index}
             onClick={() => setSelectedIndex(index)}
             className={`border-2 rounded-lg overflow-hidden transition-all ${
-              selectedIndex === index ? 'border-blue-500' : 'border-transparent'
+              selectedIndex === index ? 'border-orange-500 ' : 'border-transparent'
             }`}
           >
             <img
@@ -48,50 +77,69 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
 
       {/* Modal Carousel */}
       {isModalOpen && (
-        <div
-          className="fixed inset-0 flex items-center justify-center z-50 bg-transparent backdrop-brightness-25"
-          onClick={closeModal}
-        >
-          <div
-            className="relative w-full max-w-xl max-h-[80vh] px-4"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Carousel Image */}
-            <img
-              src={images[selectedIndex]}
-              alt={`Product Large ${selectedIndex + 1}`}
-              className="w-full max-h-[70vh] object-contain rounded-lg"
-            />
+  <div
+    className="fixed inset-0 flex items-center justify-center z-50 bg-black/80"
+    onClick={closeModal}
+  >
+    <div
+      className="relative  p-6 rounded-lg max-w-3xl w-full flex flex-col items-center"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* Close Button */}
+      <button
+        onClick={closeModal}
+        className="absolute top-16 right-35 text-gray-700 text-3xl font-bold hover:text-orange-500 hover:cursor-pointer "
+        aria-label="Close modal"
+      >
+        &times;
+      </button>
 
-            {/* Previous Button */}
-            <button
-                onClick={prevImage}
-                className="absolute top-1/2 left-4 -translate-y-1/2 bg-white bg-opacity-70 hover:bg-opacity-90 rounded-full w-10 h-10 flex items-center justify-center"
-                aria-label="Previous image"
-                >
-                <img src={prevIcon} alt="Previous" className="w-3 h-3" />
-                </button>
+      {/* Main Modal Image */}
+      <div className='rounded-lg overflow-hidden w-[70vh] max-h-[70vh] mb-4 mt-20'>
 
-                {/* Next Button */}
-                <button
-                onClick={nextImage}
-                className="absolute top-1/2 right-4 -translate-y-1/2 bg-white bg-opacity-70 hover:bg-opacity-90 rounded-full w-10 h-10 flex items-center justify-center"
-                aria-label="Next image"
-                >
-                <img src={nextIcon} alt="Next" className="w-3 h-3" />
-                </button>
-
-            {/* Close Button */}
-            <button
-              onClick={closeModal}
-              className="absolute top-2 right-2 text-white text-3xl font-bold hover:text-gray-300"
-              aria-label="Close modal"
-            >
-              &times;
-            </button>
-          </div>
+      <img
+        src={images[selectedIndex]}
+        alt={`Product Large ${selectedIndex + 1}`}
+        className="w-full h-auto object-contain"
+        />
         </div>
-      )}
+
+      {/* Modal Thumbnails */}
+      <div className="flex justify-center gap-4 mt-2">
+        {images.map((img, index) => (
+          <button
+            key={index}
+            onClick={() => setSelectedIndex(index)}
+            className={`border-2 rounded-lg overflow-hidden transition-all ${
+              selectedIndex === index ? 'border-orange-500  opacity-50' : 'border-transparent'
+            }`}
+          >
+            <img
+              src={img}
+              alt={`Thumbnail ${index + 1}`}
+              className="w-16 h-16 object-cover hover:opacity-80"
+            />
+          </button>
+        ))}
+      </div>
+
+      {/* Prev/Next Buttons */}
+      <button
+        onClick={prevImage}
+        className="absolute top-1/2 left-30 -translate-y-1/2 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:cursor-pointer"
+      >
+        <img src={prevIcon} alt="Previous" className="w-3 h-3" />
+      </button>
+      <button
+        onClick={nextImage}
+        className="absolute top-1/2 right-30 -translate-y-1/2 bg-white bg-opacity-90 hover:bg-opacity-100 rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:cursor-pointer"
+      >
+        <img src={nextIcon} alt="Next" className="w-3 h-3" />
+      </button>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

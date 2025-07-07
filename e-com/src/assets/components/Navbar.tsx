@@ -22,7 +22,7 @@ const Navbar: React.FC<NavbarProps> = ({ cartQuantity, setCartQuantity }) => {
   const linkClasses = ({ isActive }: { isActive: boolean }) =>
     `relative pb-2 transition text-gray-700 hover:text-blue-600 block ${
       isActive
-        ? 'text-black after:content-[""] after:absolute after:left-0 after:right-0 after:-bottom-4 after:h-1 after:bg-orange-500 after:rounded-full'
+        ? 'text-black after:content-[""] after:absolute after:left-0 md:after:right-0 after:-bottom-4 after:h-1 after:bg-orange-500 after:rounded-full'
         : ''
     }`;
 
@@ -105,47 +105,50 @@ const Navbar: React.FC<NavbarProps> = ({ cartQuantity, setCartQuantity }) => {
 
             {/* Cart Dropdown */}
             {isCartOpen && (
-              <div className="absolute right-0 top-12 mt-2 w-80 bg-white border border-gray-200 shadow-lg rounded-md p-4 z-50">
-                <p className="text-gray-700 font-semibold mb-4">Cart</p>
+              <div className="absolute  -right-7 md:right-0 top-12 mt-4 h-80 w-100 md:w-80 md:h-65 bg-white border border-gray-200 shadow-lg rounded-md p-4 z-50">
+                <p className="text-gray-700 font-bold mb-4 text-2xl md:text-3xl">Cart</p>
                 <hr className="mb-4" />
 
-                {cartQuantity === 0 ? (
-                  <p className="text-sm text-gray-500 text-center">
-                    Your cart is empty.
-                  </p>
-                ) : (
-                  <div>
-                    <div className="flex items-center gap-4">
-                      <img
-                        src={productImage}
-                        alt="Product"
-                        className="w-16 h-16 rounded-md"
-                      />
-                      <div className="flex-1">
-                        <p className="text-gray-700">
-                          Fall Limited Edition Sneakers
-                        </p>
-                        <p className="text-gray-700">
-                          $125.00 x {cartQuantity}{' '}
-                          <span className="font-bold">
-                            ${(125 * cartQuantity).toFixed(2)}
-                          </span>
-                        </p>
+               {cartQuantity === 0 ? (
+                    <div className="flex flex-col justify-center items-center h-40">
+                      <p className="text-sm text-gray-500 text-center mt-9 font-bold">
+                        Your cart is empty.
+                      </p>
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="flex items-center gap-4">
+                        <img
+                          src={productImage}
+                          alt="Product"
+                          className="w-16 h-16 rounded-md"
+                        />
+                        <div className="flex-1">
+                          <p className="text-gray-700">
+                            Fall Limited Edition Sneakers
+                          </p>
+                          <p className="text-gray-700">
+                            $125.00 x {cartQuantity}{' '}
+                            <span className="font-bold">
+                              ${(125 * cartQuantity).toFixed(2)}
+                            </span>
+                          </p>
+                        </div>
+                        <button
+                          onClick={clearCart}
+                          className="text-gray-400 hover:text-red-600"
+                          aria-label="Clear cart"
+                        >
+                          <img src={deleteicon} alt="delete" />
+                        </button>
                       </div>
-                      <button
-                        onClick={clearCart}
-                        className="text-gray-400 hover:text-red-600"
-                        aria-label="Clear cart"
-                      >
-                        <img src={deleteicon} alt="delete" />
+
+                      <button className="mt-6 w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 font-semibold">
+                        Checkout
                       </button>
                     </div>
+                  )}
 
-                    <button className="mt-6 w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 font-semibold">
-                      Checkout
-                    </button>
-                  </div>
-                )}
               </div>
             )}
 
