@@ -57,7 +57,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
       </div>
 
       {/* Thumbnails - Hidden on mobile */}
-      <div className="hidden md:flex justify-center gap-4 flex-wrap mt-4">
+      <div className="hidden md:flex justify-center gap-12 flex-wrap mt-4">
         {images.map((img, index) => (
           <button
             key={index}
@@ -69,7 +69,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
             <img
               src={img}
               alt={`Thumbnail ${index + 1}`}
-              className="w-16 h-16 object-cover hover:opacity-80"
+              className="w-22 h-22 object-cover hover:opacity-80"
             />
           </button>
         ))}
@@ -88,7 +88,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
       {/* Close Button */}
       <button
         onClick={closeModal}
-        className="absolute top-16 right-35 text-gray-700 text-3xl font-bold hover:text-orange-500 hover:cursor-pointer "
+        className="absolute top-16 right-48 text-gray-700 text-3xl font-bold hover:text-orange-500 hover:cursor-pointer "
         aria-label="Close modal"
       >
         &times;
