@@ -94,6 +94,9 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
         &times;
       </button>
 
+
+        <div className='w-[70vh] flex flex-col'>
+
       {/* Main Modal Image */}
       <div className='rounded-lg overflow-hidden w-[70vh] max-h-[70vh] mb-4 mt-20'>
 
@@ -105,7 +108,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
         </div>
 
       {/* Modal Thumbnails */}
-      <div className="flex justify-center gap-4 mt-2">
+      <div className="flex justify-between gap-4 mt-2 w-[70vh]">
         {images.map((img, index) => (
           <button
             key={index}
@@ -118,9 +121,10 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
               src={img}
               alt={`Thumbnail ${index + 1}`}
               className="w-16 h-16 object-cover hover:opacity-80"
-            />
+              />
           </button>
         ))}
+          </div>
       </div>
 
       {/* Prev/Next Buttons */}
